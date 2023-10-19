@@ -92,5 +92,4 @@ services:
       - "/srv/dev-disk-by-uuid-d03ef333-59df-45f4-9551-01527bbc914a/Torrents:/downloads"      
 networks:
   media_default:
-    external: true
     name: "media_default"
