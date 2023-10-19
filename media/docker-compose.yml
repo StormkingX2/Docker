@@ -60,11 +60,12 @@ services:
       - 8081:80
     restart: unless-stopped
     volumes:
-      - /srv/dev-disk-by-uuid-d03ef333-59df-45f4-9551-01527bbc914a/Configs/Organizr:/config    
+      - /srv/dev-disk-by-uuid-d03ef333-59df-45f4-9551-01527bbc914a/Configs/Organizr:/config
+
   emby:
-    image: emby/embyserver
+    container_name: embyserver
     hostname: emby
-    container_name: embyserver:latest
+    image: emby/embyserver:latest
     networks:
       - "media_default"
     ports:
@@ -75,6 +76,20 @@ services:
       - "/srv/dev-disk-by-uuid-d03ef333-59df-45f4-9551-01527bbc914a/Configs/emby:/config"
       - "/srv/dev-disk-by-uuid-d03ef333-59df-45f4-9551-01527bbc914a/TV:/tv"
       - "/srv/dev-disk-by-uuid-d03ef333-59df-45f4-9551-01527bbc914a/Movies:/movies"
+  qbittorrent:
+    container_name: qbittorrent
+    hostname: qbittorrent
+    image: cr.hotio.dev/hotio/qbittorrent:latest
+    networks:
+      - "media_default"
+    ports:
+      - "6881:6881/tcp"
+      - "6881:6881/udp"
+      - "8080:8080/tcp"
+    restart: "unless-stopped"
+    volumes:
+      - "/srv/dev-disk-by-uuid-d03ef333-59df-45f4-9551-01527bbc914a/Configs/QBittorrent:/config"
+      - "/srv/dev-disk-by-uuid-d03ef333-59df-45f4-9551-01527bbc914a/Torrents:/downloads"      
 networks:
   media_default:
     external: true
