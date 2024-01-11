@@ -79,7 +79,7 @@ services:
   qbittorrent:
     container_name: qbittorrent
     hostname: qbittorrent
-    image: cr.hotio.dev/hotio/qbittorrent:latest
+    image: ghcr.io/hotio/qbittorrent:latest
     networks:
       - "media_default"
     ports:
