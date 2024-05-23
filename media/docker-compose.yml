@@ -1,4 +1,3 @@
-
 version: "3.6"
 services:
   jackett:
@@ -11,8 +10,8 @@ services:
       - "9117:9117/tcp"
     restart: "unless-stopped"
     volumes:
-      - "/srv/dev-disk-by-uuid-d03ef333-59df-45f4-9551-01527bbc914a/Configs/Jackett:/config"
-      - "/srv/dev-disk-by-uuid-d03ef333-59df-45f4-9551-01527bbc914a/Torrents:/downloads"
+      - ${UUID_CONFIG_JACKET}
+      - ${UUID_TORRENT}
   radarr:
     container_name: "radarr"
     hostname: "radarr"
@@ -23,9 +22,9 @@ services:
       - "7878:7878/tcp"
     restart: "unless-stopped"
     volumes:
-      - "/srv/dev-disk-by-uuid-d03ef333-59df-45f4-9551-01527bbc914a/Configs/Radarr:/config"
-      - "/srv/dev-disk-by-uuid-d03ef333-59df-45f4-9551-01527bbc914a/Torrents:/downloads"
-      - "/srv/dev-disk-by-uuid-d03ef333-59df-45f4-9551-01527bbc914a/Movies:/movies"
+      - ${UUID_CONFIG_RADARR}
+      - ${UUID_TORRENT}
+      - ${UUID_MOV}
   sonarr:
     container_name: "sonarr"
     hostname: "sonarr"
@@ -36,9 +35,9 @@ services:
       - "8989:8989/tcp"
     restart: "unless-stopped"
     volumes:
-      - "/srv/dev-disk-by-uuid-d03ef333-59df-45f4-9551-01527bbc914a/TV:/tv"
-      - "/srv/dev-disk-by-uuid-d03ef333-59df-45f4-9551-01527bbc914a/Configs/Sonarr:/config"
-      - "/srv/dev-disk-by-uuid-d03ef333-59df-45f4-9551-01527bbc914a/Torrents:/downloads"  
+      - ${UUID_TV}
+      - ${UUID_CONFIG_SONARR}
+      - ${UUID_TORRENT}  
   ombi:
     container_name: ombi
     hostname: ombi
@@ -49,7 +48,7 @@ services:
       - 3579:3579
     restart: unless-stopped
     volumes:
-      - /srv/dev-disk-by-uuid-d03ef333-59df-45f4-9551-01527bbc914a/Configs/Ombi:/config
+      - ${UUID_CONFIG_OMBI}
   organizr:
     container_name: organizr
     hostname: organizr
@@ -60,7 +59,7 @@ services:
       - 8081:80
     restart: unless-stopped
     volumes:
-      - /srv/dev-disk-by-uuid-d03ef333-59df-45f4-9551-01527bbc914a/Configs/Organizr:/config
+      - ${UUID_CONFIG_ORAGANIZR}
 
   emby:
     container_name: embyserver
@@ -73,9 +72,9 @@ services:
       - 8920:8920 # HTTPS port
     restart: on-failure
     volumes:
-      - "/srv/dev-disk-by-uuid-d03ef333-59df-45f4-9551-01527bbc914a/Configs/emby:/config"
-      - "/srv/dev-disk-by-uuid-d03ef333-59df-45f4-9551-01527bbc914a/TV:/tv"
-      - "/srv/dev-disk-by-uuid-d03ef333-59df-45f4-9551-01527bbc914a/Movies:/movies"
+      - ${UUID_CONFIG_EMBY}
+      - ${UUID_TV}
+      - ${UUID_MOV}
   qbittorrent:
     container_name: qbittorrent
     hostname: qbittorrent
@@ -88,8 +87,8 @@ services:
       - "8080:8080/tcp"
     restart: "unless-stopped"
     volumes:
-      - "/srv/dev-disk-by-uuid-d03ef333-59df-45f4-9551-01527bbc914a/Configs/QBittorrent:/config"
-      - "/srv/dev-disk-by-uuid-d03ef333-59df-45f4-9551-01527bbc914a/Torrents:/downloads"      
+      - ${UUID_CONFIG_QBITORRENT}
+      - ${UUID_TORRENT}     
 networks:
   media_default:
     name: "media_default"
