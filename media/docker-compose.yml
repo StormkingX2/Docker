@@ -67,6 +67,7 @@ services:
     volumes:
       - $DOCKERDIR/Configs/Organizr:/config
 
+      
   emby:
     container_name: embyserver
     hostname: emby
