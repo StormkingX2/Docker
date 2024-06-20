@@ -56,22 +56,6 @@ services:
     volumes:
       - $DOCKERDIR/Configs/Ombi:/config
 
-
-
-  emby:
-    container_name: embyserver
-    hostname: emby
-    image: emby/embyserver:latest
-    networks:
-      - "media_default"
-    ports:
-      - 8096:8096 # HTTP port
-      - 8920:8920 # HTTPS port
-    restart: on-failure
-    volumes:
-      - $DOCKERDIR/Configs/emby:/config
-      - $DOCKERDIR/TV:/tv
-      - $DOCKERDIR/Movies:/movies
   qbittorrent:
     container_name: qbittorrent
     hostname: qbittorrent
