@@ -88,7 +88,8 @@ services:
     restart: "unless-stopped"
     volumes:
       - $DOCKERDIR/Configs/QBittorrent:/config
-      - $DOCKERDIR/Torrents:/app/qBittorrent/downloads
+      - $DOCKERDIR/Torrents:/app/qBittorrent
+      
 networks:
   media_default:
     name: "media_default"
