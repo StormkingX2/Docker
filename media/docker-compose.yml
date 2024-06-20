@@ -16,6 +16,9 @@ services:
     container_name: "radarr"
     hostname: "radarr"
     image: linuxserver/radarr:latest
+    environment:
+      - PUID=0
+      - PGID=0
     networks:
       - "media_default"
     ports:
@@ -29,6 +32,9 @@ services:
     container_name: "sonarr"
     hostname: "sonarr"
     image: linuxserver/sonarr:latest
+    environment:
+      - PUID=0
+      - PGID=0
     networks:
       - "media_default"
     ports:
@@ -89,7 +95,7 @@ services:
     volumes:
       - $DOCKERDIR/Configs/QBittorrent:/config
       - $DOCKERDIR/Torrents:/app/qBittorrent
-      
+
 networks:
   media_default:
     name: "media_default"
