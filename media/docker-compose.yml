@@ -26,7 +26,11 @@ services:
     restart: "unless-stopped"
     volumes:
       - $DOCKERDIR/Configs/Radarr:/config
+<<<<<<< HEAD
       - $DOCKERDIR/data:/data
+=======
+      - $DOCKERDIR/downloads:/downloads
+>>>>>>> 996517d (fix mount issues)
       - $DOCKERDIR/Movies:/movies
   sonarr:
     container_name: "sonarr"
@@ -43,7 +47,11 @@ services:
     volumes:
       - $DOCKERDIR/TV:/tv
       - $DOCKERDIR/Configs/Sonarr:/config
+<<<<<<< HEAD
       - $DOCKERDIR/data:/data
+=======
+      - $DOCKERDIR/downloads:/downloads
+>>>>>>> 996517d (fix mount issues)
   ombi:
     container_name: ombi
     hostname: ombi
@@ -88,7 +96,11 @@ services:
     restart: "unless-stopped"
     volumes:
       - $DOCKERDIR/Configs/QBittorrent:/config
+<<<<<<< HEAD
       - $DOCKERDIR/data/downloads:/data/downloads
+=======
+      - $DOCKERDIR/downloads:/downloads
+>>>>>>> 996517d (fix mount issues)
 networks:
   media_default:
     name: "media_default"
