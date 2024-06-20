@@ -10,8 +10,8 @@ services:
       - "9117:9117/tcp"
     restart: "unless-stopped"
     volumes:
-      - ${UUID_CONFIG_JACKET}
-      - ${UUID_TORRENT}
+      - $DOCKERDIR/Configs/Jackett:/config
+      - $DOCKERDIR/Torrents:/downloads
   radarr:
     container_name: "radarr"
     hostname: "radarr"
@@ -22,9 +22,9 @@ services:
       - "7878:7878/tcp"
     restart: "unless-stopped"
     volumes:
-      - ${UUID_CONFIG_RADARR}
-      - ${UUID_TORRENT}
-      - ${UUID_MOV}
+      - $DOCKERDIR/Configs/Radarr:/config
+      - $DOCKERDIR/Torrents:/downloads
+      - $DOCKERDIR/Movies:/movies
   sonarr:
     container_name: "sonarr"
     hostname: "sonarr"
@@ -35,9 +35,9 @@ services:
       - "8989:8989/tcp"
     restart: "unless-stopped"
     volumes:
-      - ${UUID_TV}
-      - ${UUID_CONFIG_SONARR}
-      - ${UUID_TORRENT}  
+      - $DOCKERDIR/TV:/tv
+      - $DOCKERDIR/Configs/Sonarr:/config
+      - $DOCKERDIR/Torrents:/downloads
   ombi:
     container_name: ombi
     hostname: ombi
@@ -48,7 +48,7 @@ services:
       - 3579:3579
     restart: unless-stopped
     volumes:
-      - ${UUID_CONFIG_OMBI}
+      - $DOCKERDIR/Configs/Ombi:/config
   organizr:
     container_name: organizr
     hostname: organizr
@@ -59,7 +59,7 @@ services:
       - 8081:80
     restart: unless-stopped
     volumes:
-      - ${UUID_CONFIG_ORAGANIZR}
+      - $DOCKERDIR/Configs/Organizr:/config
 
   emby:
     container_name: embyserver
@@ -72,9 +72,9 @@ services:
       - 8920:8920 # HTTPS port
     restart: on-failure
     volumes:
-      - ${UUID_CONFIG_EMBY}
-      - ${UUID_TV}
-      - ${UUID_MOV}
+      - $DOCKERDIR/Configs/emby:/config
+      - $DOCKERDIR/TV:/tv
+      - $DOCKERDIR/Movies:/movies
   qbittorrent:
     container_name: qbittorrent
     hostname: qbittorrent
@@ -87,8 +87,8 @@ services:
       - "8080:8080/tcp"
     restart: "unless-stopped"
     volumes:
-      - ${UUID_CONFIG_QBITORRENT}
-      - ${UUID_TORRENT}     
+      - $DOCKERDIR/Configs/QBittorrent:/config
+      - $DOCKERDIR/Torrents:/downloads    
 networks:
   media_default:
     name: "media_default"
