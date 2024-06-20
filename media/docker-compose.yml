@@ -55,19 +55,9 @@ services:
     restart: unless-stopped
     volumes:
       - $DOCKERDIR/Configs/Ombi:/config
-  organizr:
-    container_name: organizr
-    hostname: organizr
-    image: organizr/organizr:latest
-    networks:
-      - "media_default"
-    ports:
-      - 8081:80
-    restart: unless-stopped
-    volumes:
-      - $DOCKERDIR/Configs/Organizr:/config
 
-      
+
+
   emby:
     container_name: embyserver
     hostname: emby
