@@ -85,6 +85,9 @@ services:
     container_name: qbittorrent
     hostname: qbittorrent
     image: ghcr.io/hotio/qbittorrent:latest
+    environment:
+      - PUID=0
+      - PGID=0
     networks:
       - "media_default"
     ports:
