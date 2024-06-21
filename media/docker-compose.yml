@@ -73,6 +73,22 @@ services:
     volumes:
       - $DOCKERDIR/Configs/QBittorrent:/config
       - $DOCKERDIR/downloads/complete:/downloads/complete
+
+  emby:
+    container_name: embyserver
+    hostname: emby
+    image: emby/embyserver:latest
+    networks:
+      - "media_default"
+    ports:
+      - 8096:8096 # HTTP port
+      - 8920:8920 # HTTPS port
+    restart: on-failure
+    volumes:
+      - $DOCKERDIR/Configs/emby:/config
+      - $DOCKERDIR/TV:/tv
+      - $DOCKERDIR/Movies:/movies
+
 networks:
   media_default:
     name: "media_default"
