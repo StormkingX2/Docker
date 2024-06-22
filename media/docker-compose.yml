@@ -5,8 +5,8 @@ services:
     hostname: jackett
     image: linuxserver/jackett:latest
     environment:
-      - PUID=1000
-      - PGID=1000
+      - PUID=0
+      - PGID=0
     networks:
       - "media_default"
     ports:
@@ -20,8 +20,8 @@ services:
     hostname: "radarr"
     image: linuxserver/radarr:latest
     environment:
-      - PUID=1000
-      - PGID=1000
+      - PUID=0
+      - PGID=0
     networks:
       - "media_default"
     ports:
@@ -36,8 +36,8 @@ services:
     hostname: "sonarr"
     image: linuxserver/sonarr:latest
     environment:
-      - PUID=1000
-      - PGID=1000
+      - PUID=0
+      - PGID=0
     networks:
       - "media_default"
     ports:
@@ -52,8 +52,8 @@ services:
     hostname: ombi
     image: linuxserver/ombi:latest
     environment:
-      - PUID=1000
-      - PGID=1000
+      - PUID=0
+      - PGID=0
     networks:
     - "media_default"
     ports:
@@ -67,8 +67,8 @@ services:
     hostname: qbittorrent
     image: ghcr.io/hotio/qbittorrent:latest
     environment:
-      - PUID=1000
-      - PGID=1000
+      - PUID=0
+      - PGID=0
     networks:
       - "media_default"
     ports:
