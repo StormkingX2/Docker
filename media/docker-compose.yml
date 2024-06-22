@@ -4,6 +4,9 @@ services:
     container_name: "jackett"
     hostname: jackett
     image: linuxserver/jackett:latest
+    environment:
+      - PUID=1000
+      - PGID=1000
     networks:
       - "media_default"
     ports:
@@ -17,8 +20,8 @@ services:
     hostname: "radarr"
     image: linuxserver/radarr:latest
     environment:
-      - PUID=0
-      - PGID=0
+      - PUID=1000
+      - PGID=1000
     networks:
       - "media_default"
     ports:
@@ -33,8 +36,8 @@ services:
     hostname: "sonarr"
     image: linuxserver/sonarr:latest
     environment:
-      - PUID=0
-      - PGID=0
+      - PUID=1000
+      - PGID=1000
     networks:
       - "media_default"
     ports:
@@ -48,6 +51,9 @@ services:
     container_name: ombi
     hostname: ombi
     image: linuxserver/ombi:latest
+    environment:
+      - PUID=1000
+      - PGID=1000
     networks:
     - "media_default"
     ports:
@@ -61,8 +67,8 @@ services:
     hostname: qbittorrent
     image: ghcr.io/hotio/qbittorrent:latest
     environment:
-      - PUID=0
-      - PGID=0
+      - PUID=1000
+      - PGID=1000
     networks:
       - "media_default"
     ports:
@@ -78,6 +84,9 @@ services:
     container_name: embyserver
     hostname: emby
     image: emby/embyserver:latest
+    environment:
+      - PUID=1000
+      - PGID=1000
     networks:
       - "media_default"
     ports:
