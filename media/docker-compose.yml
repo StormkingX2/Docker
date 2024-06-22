@@ -13,8 +13,8 @@ services:
       - "9117:9117/tcp"
     restart: "unless-stopped"
     volumes:
-      - $DOCKERDIR/Configs/Jackett:/config
-      - $DOCKERDIR/Torrents:/downloads
+      - ${DOCKERDIR}/Configs/Jackett:/config
+      - ${DOCKERDIR}/Torrents:/downloads
   radarr:
     container_name: "radarr"
     hostname: "radarr"
@@ -28,9 +28,9 @@ services:
       - "7878:7878/tcp"
     restart: "unless-stopped"
     volumes:
-      - $DOCKERDIR/Configs/Radarr:/config
-      - $DOCKERDIR/downloads:/downloads
-      - $DOCKERDIR/Movies:/movies
+      - ${DOCKERDIR}/Configs/Radarr:/config
+      - ${DOCKERDIR}/downloads:/downloads
+      - ${DOCKERDIR}/Movies:/movies
   sonarr:
     container_name: "sonarr"
     hostname: "sonarr"
@@ -44,9 +44,9 @@ services:
       - "8989:8989/tcp"
     restart: "unless-stopped"
     volumes:
-      - $DOCKERDIR/TV:/tv
-      - $DOCKERDIR/Configs/Sonarr:/config
-      - $DOCKERDIR/downloads:/downloads
+      - ${DOCKERDIR}/TV:/tv
+      - ${DOCKERDIR}/Configs/Sonarr:/config
+      - ${DOCKERDIR}/downloads:/downloads
   ombi:
     container_name: ombi
     hostname: ombi
@@ -60,7 +60,7 @@ services:
       - 3579:3579
     restart: unless-stopped
     volumes:
-      - $DOCKERDIR/Configs/Ombi:/config
+      - ${DOCKERDIR}/Configs/Ombi:/config
 
   qbittorrent:
     container_name: qbittorrent
@@ -77,8 +77,8 @@ services:
       - "8080:8080/tcp"
     restart: "unless-stopped"
     volumes:
-      - $DOCKERDIR/Configs/QBittorrent:/config
-      - $DOCKERDIR/downloads/complete:/downloads/complete
+      - ${DOCKERDIR}/Configs/QBittorrent:/config
+      - ${DOCKERDIR}/downloads/complete:/downloads/complete
 
   emby:
     container_name: embyserver
@@ -94,9 +94,9 @@ services:
       - 8920:8920 # HTTPS port
     restart: on-failure
     volumes:
-      - $DOCKERDIR/Configs/emby:/config
-      - $DOCKERDIR/TV:/tv
-      - $DOCKERDIR/Movies:/movies
+      - ${DOCKERDIR}/Configs/emby:/config
+      - ${DOCKERDIR}/TV:/tv
+      - ${DOCKERDIR}/Movies:/movies
 
 networks:
   media_default:
