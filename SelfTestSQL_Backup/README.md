@@ -91,7 +91,7 @@ Run this script after the restore and Discord notification steps:
 
 The `New-SqlPassword` function ensures that the SA password meets SQL Server's complexity requirements. It is automatically generated during the restore process and can optionally be logged for troubleshooting.
 
-### Features:
+### Features
 
 - Length: 16 characters
 - Includes:
@@ -107,14 +107,14 @@ The `New-SqlPassword` function ensures that the SA password meets SQL Server's c
 
 Each `.bak` file is restored into a separate Docker container to ensure isolation and simplify testing.
 
-### Container Configuration:
+### Container Configuration
 
 - **Name:** `sql_restore_<dbname>`
 - **Port:** `1433 + index` (e.g., 1433, 1434, 1435…)
 - **Volume Mount:** `-v $bakFolder:/var/opt/mssql/backup`
 - **Image:** `mcr.microsoft.com/mssql/server:2019-latest`
 
-### Benefits:
+### Benefits
 
 - Full isolation between databases
 - Easy cleanup by removing containers
@@ -127,7 +127,7 @@ Each `.bak` file is restored into a separate Docker container to ensure isolatio
 
 After all restores are completed, a message is sent to a Discord channel containing the connection strings for each restored database.
 
-### Usage:
+### Usage
 
 ```powershell
 .\Send-DiscordMessage.ps1 -ConnectionStrings $connectionStrings -WebhookUrl $webhookUrl
@@ -143,11 +143,11 @@ After the Discord message is sent, the dashboard script runs to generate a CSV r
 .\Generate-RestoreDashboard.ps1
 ```
 
-### 🔍 What It Does
+### 🔍 Dashboard Analysis Details
 
 The `Generate-RestoreDashboard.ps1` script performs a post-restore audit by analyzing each `.bak` file and its corresponding Docker container. It appends results to a CSV file (`restore_dashboard.csv`) with detailed status and observations.
 
-#### Key Functions:
+#### Key Functions
 
 - ✅ Scans all `.bak` files in the backup folder
 - 🐳 Checks if a corresponding Docker container exists and is running
@@ -163,7 +163,7 @@ The `Generate-RestoreDashboard.ps1` script performs a post-restore audit by anal
   - `Timestamp`
   - `Observations`
 
-#### Status Logic:
+#### Status Logic
 
 - ✅ **Restored** — SQL Server is ready and restore logs confirm success
 - ❌ **Failed** — SQL Server is ready but logs contain restore errors
@@ -172,7 +172,6 @@ The `Generate-RestoreDashboard.ps1` script performs a post-restore audit by anal
 - ❌ **Missing** — No container found for the `.bak` file
 
 This script is typically run **after** the Discord notification step to ensure all containers are initialized and logs are available.
-
 
 ## 🧪 Testing & Validation
 
@@ -183,10 +182,13 @@ After the restore process completes, each SQL Server instance runs in its own Do
 ```text
 Server=localhost,<port>;Database=<dbname>;User Id=sa;Password=<password>;
 ```
-Replace <port> and <dbname> with the values assigned during the restore. The SA password is generated automatically and can be logged or retrieved depending on your configuration.
+
+Replace `port` and `dbname` with the values assigned during the restore. The SA password is generated automatically and can be logged or retrieved depending on your configuration.
 
 ### Validation Options
+
 You can validate the restored databases using:
+
 - SQL Server Management Studio (SSMS) — Connect using the container’s port and verify schema/data
 
 - Azure Data Studio — Lightweight alternative for querying and inspecting databases
@@ -213,8 +215,6 @@ This command forcefully stops and removes all containers whose names begin with 
 
 ## 📁 File Structure
 
-
-
 ```code
 /SelfTestSQL_Backup/ 
 │ 
@@ -225,4 +225,3 @@ This command forcefully stops and removes all containers whose names begin with 
 ├── connection_strings.txt 
 └── restore_dashboard.csv
 ```
-
