@@ -76,12 +76,18 @@ $basePort = 1433
 $sqlPassword = New-SqlPassword -Length 16
 
 
-# Get all .bak files in the folder
-$bakFiles = Get-ChildItem -Path $bakFolder -Filter *.bak
-if ($bakFiles.Count -eq 0) {
-    Write-Error "No .bak files found in $bakFolder"
-    exit 1
+# Get all .bak files in the folder and Wait until at least one .bak file is found
+while ($true) {
+    $bakFiles = Get-ChildItem -Path $bakFolder -Filter *.bak
+    if ($bakFiles.Count -gt 0) {
+        break
+    }
+    Write-Host "Waiting for .bak files in $bakFolder..."
+    Start-Sleep -Seconds 5  # Wait 5 seconds before checking again
 }
+
+Write-Host "Found .bak files:"
+$bakFiles | ForEach-Object { Write-Host $_.FullName }
 
 # Prepare list to hold connection strings
 $connectionStrings = @()
