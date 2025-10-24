@@ -4,6 +4,9 @@
 **Date:** October 2025  
 **Purpose:** Automate the restoration of SQL Server `.bak` files into isolated Docker containers for testing and validation.
 
+
+https://github.com/user-attachments/assets/5f5455c6-98dc-4d17-8965-6246a430af0c
+
 ---
 
 ## 📦 Overview
