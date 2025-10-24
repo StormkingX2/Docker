@@ -104,7 +104,7 @@ foreach ($bakFile in $bakFiles)
         -p "$port`:1433" `
         --name "$containerName" `
         -v "${bakFolder}:/var/opt/mssql/backup" `
-        -d $sqlImage
+        -d $sqlImage | Out-Null
 
     # Wait for SQL Server to be ready
     $ready = $false
