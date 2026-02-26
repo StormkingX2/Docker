@@ -8,13 +8,11 @@ services:
 # ╚═╝     ╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═
                             
   prowlarr:
+    env_file: .env 
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
     hostname: prowlarr
     platform: linux/amd64
-    environment:
-      - TZ=${TZ}
-      - env_file: .env  
     volumes:
       - ${ARRPATH}Prowlarr/config:/config
       - ${ARRPATH}Prowlarr/backup:/data/Backup
@@ -32,15 +30,14 @@ services:
 # ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝                                                 
       
   sonarr:
+    env_file: .env 
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
     hostname: sonarr
     platform: linux/amd64
     environment:
-      - env_file: .env 
       - PUID=0
       - PGID=0
-      - TZ=${TZ}
     volumes:
       - ${ARRPATH}Sonarr/config:/config
       - ${ARRPATH}Sonarr/backup:/data/Backup
@@ -58,15 +55,14 @@ services:
 # ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝                                              
 
   radarr:
+    env_file: .env 
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
     hostname: radarr
     platform: linux/amd64
     environment:
-      - env_file: .env 
       - PUID=0
       - PGID=0
-      - TZ=${TZ}
     volumes:
       - ${ARRPATH}Radarr/config:/config
       - ${ARRPATH}Radarr/movies:/data/movies
@@ -84,15 +80,14 @@ services:
 #  ╚════╝ ╚══════╝╚══════╝╚══════╝╚═╝   ╚═╝     ╚═╝╚═╝  ╚═══╝
 
   jellyfin:
+    env_file: .env 
     image: lscr.io/linuxserver/jellyfin:latest
     container_name: jellyfin
     hostname: jellyfin
     platform: linux/amd64
     environment:
-      - env_file: .env 
       - PUID=0
       - PGID=0
-      - TZ=${TZ}
     ports:
       - '8096:8096/tcp'   # Jellyfin web interface
       - '7359:7359/udp'   # Network discovery
@@ -111,6 +106,7 @@ services:
 #  ╚══▀▀═╝ ╚═════╝ ╚═╝   ╚═╝      ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝                                                                                          
 
   qbittorrent:
+    env_file: .env 
     image: lscr.io/linuxserver/qbittorrent:latest
     container_name: qbittorrent
     hostname: qbittorrent
@@ -127,7 +123,6 @@ services:
       - 8085:8085
       - 6881:6881
     environment:
-      - env_file: .env 
       - PUID=0
       - PGID=0
       - WEBUI_PORT=8085
@@ -142,12 +137,12 @@ services:
 #     ╚════╝ ╚══════╝╚══════╝╚══════╝╚═╝   ╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝
 #                                                                                                                                                             
   overseerr:
+    env_file: .env 
     image: ghcr.io/fallenbagel/jellyseerr:latest
     init: true
     container_name: jellyseerr
     hostname: jellyseerr
     environment:
-      - env_file: .env 
       - PUID=0
       - PGID=0
       - PORT=5055 #optional
@@ -164,12 +159,12 @@ services:
 #██████╔╝██║  ██║███████╗██║  ██║██║  ██║██║  ██║
 #╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
   bazarr:
+    env_file: .env 
     image: lscr.io/linuxserver/bazarr:latest
     container_name: bazarr
     hostname: bazarr
     platform: linux/amd64
-    environment:
-      - env_file: .env 
+    environment: 
       - PUID=0
       - PGID=0
     ports:
