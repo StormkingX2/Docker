@@ -8,11 +8,14 @@ services:
 # ╚═╝     ╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═
                             
   prowlarr:
-    env_file: .env 
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
     hostname: prowlarr
     platform: linux/amd64
+    environment: 
+      - ${PUID}
+      - ${PGID}
+      - ${TZ}
     volumes:
       - ${ARRPATH}Prowlarr/config:/config
       - ${ARRPATH}Prowlarr/backup:/data/Backup
@@ -20,7 +23,12 @@ services:
     ports:
       - 9696:9696
     restart: unless-stopped
-
+    healthcheck:
+      test: curl -f http://prowlarr:9696/ping || exit 1
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 40s
 
 # ███████╗ ██████╗ ███╗   ██╗ █████╗ ██████╗ ██████╗ 
 # ██╔════╝██╔═══██╗████╗  ██║██╔══██╗██╔══██╗██╔══██╗
@@ -30,14 +38,14 @@ services:
 # ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝                                                 
       
   sonarr:
-    env_file: .env 
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
     hostname: sonarr
     platform: linux/amd64
-    environment:
-      - PUID=0
-      - PGID=0
+    environment: 
+      - ${PUID}
+      - ${PGID}
+      - ${TZ}
     volumes:
       - ${ARRPATH}Sonarr/config:/config
       - ${ARRPATH}Sonarr/backup:/data/Backup
@@ -46,6 +54,12 @@ services:
     ports:
       - 8989:8989
     restart: unless-stopped
+    healthcheck:
+      test: curl -f http://sonarr:8989/ping || exit 1
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 40s
       
 # ██████╗  █████╗ ██████╗  █████╗ ██████╗ ██████╗ 
 # ██╔══██╗██╔══██╗██╔══██╗██╔══██╗██╔══██╗██╔══██╗
@@ -55,14 +69,14 @@ services:
 # ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝                                              
 
   radarr:
-    env_file: .env 
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
     hostname: radarr
     platform: linux/amd64
-    environment:
-      - PUID=0
-      - PGID=0
+    environment: 
+      - ${PUID}
+      - ${PGID}
+      - ${TZ}
     volumes:
       - ${ARRPATH}Radarr/config:/config
       - ${ARRPATH}Radarr/movies:/data/movies
@@ -71,6 +85,12 @@ services:
     ports:
       - 7878:7878
     restart: unless-stopped
+    healthcheck:
+      test: curl -f http://radarr:7878/ping || exit 1
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 40s
 
 #      ██╗███████╗██╗     ██╗  ██╗   ██╗███████╗██╗███╗   ██╗
 #      ██║██╔════╝██║     ██║  ╚██╗ ██╔╝██╔════╝██║████╗  ██║
@@ -80,14 +100,14 @@ services:
 #  ╚════╝ ╚══════╝╚══════╝╚══════╝╚═╝   ╚═╝     ╚═╝╚═╝  ╚═══╝
 
   jellyfin:
-    env_file: .env 
     image: lscr.io/linuxserver/jellyfin:latest
     container_name: jellyfin
     hostname: jellyfin
     platform: linux/amd64
-    environment:
-      - PUID=0
-      - PGID=0
+    environment: 
+      - ${PUID}
+      - ${PGID}
+      - ${TZ}
     ports:
       - '8096:8096/tcp'   # Jellyfin web interface
       - '7359:7359/udp'   # Network discovery
@@ -97,6 +117,12 @@ services:
       - ${ARRPATH}Radarr/movies:/data/Movies
       - ${ARRPATH}Sonarr/tvshows:/data/TVShows
     restart: unless-stopped
+    healthcheck:
+      test: curl -f http://jellyfin:8096/health || exit 1
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 40s
           
 #  ██████╗ ██████╗ ██╗████████╗████████╗ ██████╗ ██████╗ ██████╗ ███████╗███╗   ██╗████████╗
 # ██╔═══██╗██╔══██╗██║╚══██╔══╝╚══██╔══╝██╔═══██╗██╔══██╗██╔══██╗██╔════╝████╗  ██║╚══██╔══╝
@@ -106,7 +132,6 @@ services:
 #  ╚══▀▀═╝ ╚═════╝ ╚═╝   ╚═╝      ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝                                                                                          
 
   qbittorrent:
-    env_file: .env 
     image: lscr.io/linuxserver/qbittorrent:latest
     container_name: qbittorrent
     hostname: qbittorrent
@@ -122,35 +147,20 @@ services:
     ports:
       - 8085:8085
       - 6881:6881
-    environment:
-      - PUID=0
-      - PGID=0
+    environment: 
+      - ${PUID}
+      - ${PGID}
+      - ${TZ}
       - WEBUI_PORT=8085
       - TORRENTING_PORT=6881
     healthcheck:
-      start_period: 15s
-#         ██╗███████╗██╗     ██╗  ██╗   ██╗███████╗███████╗███████╗██████╗ ██████╗ 
-#         ██║██╔════╝██║     ██║  ╚██╗ ██╔╝██╔════╝██╔════╝██╔════╝██╔══██╗██╔══██╗
-#         ██║█████╗  ██║     ██║   ╚████╔╝ ███████╗█████╗  █████╗  ██████╔╝██████╔╝
-#    ██   ██║██╔══╝  ██║     ██║    ╚██╔╝  ╚════██║██╔══╝  ██╔══╝  ██╔══██╗██╔══██╗
-#    ╚█████╔╝███████╗███████╗███████╗██║   ███████║███████╗███████╗██║  ██║██║  ██║
-#     ╚════╝ ╚══════╝╚══════╝╚══════╝╚═╝   ╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝
-#                                                                                                                                                             
-  overseerr:
-    env_file: .env 
-    image: ghcr.io/fallenbagel/jellyseerr:latest
-    init: true
-    container_name: jellyseerr
-    hostname: jellyseerr
-    environment:
-      - PUID=0
-      - PGID=0
-      - PORT=5055 #optional
-    ports:
-      - 5055:5055
-    volumes:
-      - ${ARRPATH}jellyseerr/config:/app/config
-    restart: unless-stopped
+      test: ["CMD", "curl", "-f", "http://qbittorrent:8085"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+
 
 #██████╗  █████╗ ███████╗ █████╗ ██████╗ ██████╗ 
 #██╔══██╗██╔══██╗╚══███╔╝██╔══██╗██╔══██╗██╔══██╗
@@ -159,14 +169,14 @@ services:
 #██████╔╝██║  ██║███████╗██║  ██║██║  ██║██║  ██║
 #╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
   bazarr:
-    env_file: .env 
     image: lscr.io/linuxserver/bazarr:latest
     container_name: bazarr
     hostname: bazarr
     platform: linux/amd64
     environment: 
-      - PUID=0
-      - PGID=0
+      - ${PUID}
+      - ${PGID}
+      - ${TZ}
     ports:
     - 6767:6767
     volumes:
@@ -174,4 +184,24 @@ services:
       - ${ARRPATH}Radarr/movies:/data/Movies
       - ${ARRPATH}Sonarr/tvshows:/data/TVShows
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://bazarr:6767"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
+
+  qui:
+    image: ghcr.io/autobrr/qui:latest
+    container_name: qui
+    hostname: qui
+    environment: 
+      - ${PUID}
+      - ${PGID}
+      - ${TZ}
+    ports:
+      - '7476:7476'
+    volumes:
+      - ${ARRPATH}qbittorrent/config:/config
+      - ${ARRPATH}Downloads:/downloads
