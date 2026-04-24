@@ -205,3 +205,4 @@ services:
     volumes:
       - ${ARRPATH}qbittorrent/config:/config
       - ${ARRPATH}Downloads:/downloads
+    restart: unless-stopped
